@@ -1,13 +1,18 @@
 # -*- coding: utf-8 -*-
 from datetime import datetime
+
 from flask import Flask, render_template
+from tototo import config
+from tototo.database import db_session
 
 
-def create_app():
-    return Flask(__name__)
+app = Flask(__name__)
+app.config['DATABASE_URI'] = config.DATABASE_URI
 
 
-app = create_app()
+@app.teardown_appcontext
+def shutdown_session(exception=None):
+    db_session.remove()
 
 
 @app.route('/')
