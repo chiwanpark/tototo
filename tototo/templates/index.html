@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8"/>
+  <title>tototo - 토요일! 토요일은 토즈다</title>
+
+  <!-- Pure Framework -->
+  <link rel="stylesheet" type="text/css" href="http://yui.yahooapis.com/pure/0.5.0/pure-min.css">
+  <link rel="stylesheet" type="text/css" href="http://yui.yahooapis.com/pure/0.5.0/grids-responsive-min.css"/>
+
+  <!-- Fonts -->
+  <link rel="stylesheet" type="text/css" href="http://fonts.googleapis.com/css?family=Open+Sans:400,400italic,600,600italic"/>
+  <link rel="stylesheet" type="text/css" href="http://cdn.jsdelivr.net/font-nanum/1.0/nanumbarungothic/nanumbarungothiclight.css"/>
+
+  <!-- Icons -->
+  <link rel="stylesheet" type="text/css" href="http://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.2.0/css/font-awesome.min.css"/>
+
+  <!-- Custom CSS -->
+  <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='style.css') }}"/>
+</head>
+<body>
+<div id="wrapper" class="pure-g">
+  <header class="pure-u-1">
+    <h1>
+      <i class="fa fa-5x fa-star"></i>
+      tototo.chiwanpark.com
+      <span>토요일! 토요일은 토즈다</span>
+    </h1>
+  </header>
+
+  <section id="about" class="pure-u-1 pure-u-md-1-2">
+    <div>
+      <h2>About</h2>
+
+      <p>매주 토요일, 토즈에 모여 각자 하고싶은 일을 하는 모임입니다. 집에서 빈둥빈둥 놀지말고 토즈에 나와 스스로에게 도움이 되는 일을 해봅시다.</p>
+
+      <p>이 모임은 항상은 아니지만, NIPA에서 장소를 지원받고 있습니다.</p>
+    </div>
+  </section>
+
+  <section id="next" class="pure-u-1 pure-u-md-1-2">
+    <div>
+      <h2>Next tototo</h2>
+
+      {% if next_toz %}
+        <p>다음 토토토 모임은 {{ next_toz['location'] }}에서 {{ next_toz['date'].strftime('%Y년 %m월 %d일 %H시 %M분') }}에 시작됩니다.</p>
+
+        <p><a href="#" class="pure-button pure-button-primary">토토토 참여하기</a></p>
+      {% else %}
+        <p>아직 다음 토토토 모임에 대한 내용이 등록되지 않았습니다.</p>
+      {% endif %}
+    </div>
+  </section>
+
+  <section id="previous" class="pure-u-1">
+    <div>
+      <h2>Previous tototo</h2>
+
+      <p>토토토는 2015년 1월에 시작되어, 지금까지 총 {{ prev_toz|length }}회 모임을 가졌습니다. 아래 목록은 지금까지 했던 토토토의 기록입니다.</p>
+
+      <table class="pure-table pure-table-bordered">
+        <thead>
+        <tr>
+          <th class="list-number">#</th>
+          <th class="list-date">날짜</th>
+          <th class="list-people">참여 인원</th>
+          <th class="list-location">장소</th>
+        </tr>
+        </thead>
+        <tbody>
+        {% for schedule in prev_toz %}
+          <tr>
+            <td class="list-number">{{ loop.index }}</td>
+            <td class="list-date">{{ schedule['date'].strftime('%Y년 %m월 %d일') }}</td>
+            <td class="list-people">{{ schedule['people']|join(', ') }}</td>
+            <td class="list-location">{{ schedule['location'] }}</td>
+          </tr>
+        {% endfor %}
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+  <footer class="pure-u-1">2015 Chiwan Park All rights reserved.</footer>
+</div>
+</body>
+</html>

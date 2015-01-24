@@ -1,0 +1,68 @@
+html, button, input, select, textarea,
+.pure-g [class *= "pure-u"] {
+  font-family: "Open Sans", "NanumBarunGothicLight", sans-serif;
+}
+
+h1 {
+  text-align: center;
+  font-size: 1.6em;
+}
+
+h1 > i.fa {
+  display: block;
+  margin: 15px 0;
+}
+
+h1 > span {
+  display: block;
+  margin: 4px 0;
+  font-size: 0.8em;
+}
+
+h2 {
+  font-size: 1.3em;
+  margin: 4px 0;
+}
+
+body {
+  max-width: 960px;
+  margin: 5px auto;
+  padding: 10px;
+}
+
+section > div {
+  padding: 10px 20px;
+  text-align: justify;
+}
+
+div > p {
+  margin: 7px 0;
+}
+
+table {
+  margin: 5px auto;
+}
+
+@media only screen and (max-width: 480px) {
+  table .list-number {
+    display: none;
+  }
+
+  table .list-date {
+    width: 50%;
+  }
+
+  table .list-people {
+    display: none;
+  }
+
+  table .list-location {
+    width: 50%;
+  }
+}
+
+footer {
+  font-size: 0.8em;
+  text-align: center;
+  margin: 10px 0;
+}
