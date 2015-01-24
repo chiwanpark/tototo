@@ -1,13 +1,29 @@
 # -*- coding: utf-8 -*-
 from datetime import datetime
+import importlib
 
 from flask import Flask, render_template
 from tototo import config
 from tototo.database import db_session
 
 
-app = Flask(__name__)
+def create_app():
+    blueprints = ['users']
+    context = Flask(__name__)
+
+    for blueprint in blueprints:
+        try:
+            module = importlib.import_module('tototo.{blueprint}'.format(blueprint=blueprint))
+            context.register_blueprint(module.context)
+        except ImportError as ex:
+            pass
+
+    return context
+
+
+app = create_app()
 app.config['DATABASE_URI'] = config.DATABASE_URI
+app.config['SECRET_KEY'] = config.SECRET_KEY
 
 
 @app.teardown_appcontext

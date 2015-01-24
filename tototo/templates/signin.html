@@ -1,0 +1,35 @@
+{% extends "skeleton.html" %}
+{% block content %}
+  <section class="pure-u-1">
+    <h2>Sign in</h2>
+
+    <p>토토토 모임에 참여하기 위해서 로그인해주세요.</p>
+
+    {% if message %}
+      <div class="error-message">
+        <h3><i class="fa fa-times"></i> Error</h3>
+
+        <p>{{ message }}</p>
+      </div>
+    {% endif %}
+
+    <form class="pure-form pure-form-aligned" method="post" action="{{ url_for('users.post_signin', dest=dest) }}">
+      <fieldset>
+        <div class="pure-control-group">
+          <label for="email"><i class="fa fa-envelope"></i> Email</label>
+          <input type="text" id="email" name="email" required/>
+        </div>
+
+        <div class="pure-control-group">
+          <label for="password"><i class="fa fa-asterisk"></i> Password</label>
+          <input type="password" id="password" name="password" required/>
+        </div>
+
+        <div class="pure-controls">
+          <button type="submit" class="pure-button pure-button-primary"><i class="fa fa-sign-in"></i> 로그인</button>
+          <a href="{{ url_for('users.get_signup') }}" class="pure-button"><i class="fa fa-user-plus"></i> 가입하기</a>
+        </div>
+      </fieldset>
+    </form>
+  </section>
+{% endblock %}

@@ -1,33 +1,5 @@
-<!DOCTYPE html>
-<html>
-<head>
-  <meta charset="utf-8"/>
-  <title>tototo - 토요일! 토요일은 토즈다</title>
-
-  <!-- Pure Framework -->
-  <link rel="stylesheet" type="text/css" href="http://yui.yahooapis.com/pure/0.5.0/pure-min.css">
-  <link rel="stylesheet" type="text/css" href="http://yui.yahooapis.com/pure/0.5.0/grids-responsive-min.css"/>
-
-  <!-- Fonts -->
-  <link rel="stylesheet" type="text/css" href="http://fonts.googleapis.com/css?family=Open+Sans:400,400italic,600,600italic"/>
-  <link rel="stylesheet" type="text/css" href="http://cdn.jsdelivr.net/font-nanum/1.0/nanumbarungothic/nanumbarungothiclight.css"/>
-
-  <!-- Icons -->
-  <link rel="stylesheet" type="text/css" href="http://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.2.0/css/font-awesome.min.css"/>
-
-  <!-- Custom CSS -->
-  <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='style.css') }}"/>
-</head>
-<body>
-<div id="wrapper" class="pure-g">
-  <header class="pure-u-1">
-    <h1>
-      <i class="fa fa-5x fa-star"></i>
-      tototo.chiwanpark.com
-      <span>토요일! 토요일은 토즈다</span>
-    </h1>
-  </header>
-
+{% extends "skeleton.html" %}
+{% block content %}
   <section id="about" class="pure-u-1 pure-u-md-1-2">
     <div>
       <h2>About</h2>
@@ -80,8 +52,4 @@
       </table>
     </div>
   </section>
-
-  <footer class="pure-u-1">2015 Chiwan Park All rights reserved.</footer>
-</div>
-</body>
-</html>
+{% endblock %}

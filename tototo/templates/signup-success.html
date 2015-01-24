@@ -1,0 +1,11 @@
+{% extends "skeleton.html" %}
+{% block content %}
+  <section class="pure-u-1">
+    <h2>Success!</h2>
+
+    <div>
+      <p>성공적으로 가입되었습니다! 아래 링크를 클릭해서 로그인해주세요.</p>
+      <a href="{{ url_for('users.get_signin') }}" class="pure-button pure-button-primary"><i class="fa fa-sign-in"></i> 로그인</a>
+    </div>
+  </section>
+{% endblock %}

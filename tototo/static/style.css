@@ -25,7 +25,7 @@ h2 {
 }
 
 body {
-  max-width: 960px;
+  max-width: 700px;
   margin: 5px auto;
   padding: 10px;
 }
@@ -40,7 +40,7 @@ div > p {
 }
 
 table {
-  margin: 5px auto;
+  margin: 20px auto;
 }
 
 @media only screen and (max-width: 480px) {
@@ -59,6 +59,33 @@ table {
   table .list-location {
     width: 50%;
   }
+}
+
+form {
+  margin: 0 auto;
+}
+
+.pure-button-error {
+  color: white;
+  text-shadow: 0 1px 1px rgba(0, 0, 0, 0.2);
+  background: rgb(202, 60, 60);
+}
+
+div.error-message {
+  background: #f2dede;
+  border-radius: 4px;
+  color: rgb(202, 60, 60);
+  margin-bottom: 10px;
+  border: 1px solid rgb(235, 204, 209);
+}
+
+div.error-message h3 {
+  margin: 0 0 1em 0;
+  display: inline;
+}
+
+div.error-message p {
+  display: inline;
 }
 
 footer {
