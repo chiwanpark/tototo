@@ -8,15 +8,14 @@ from tototo.database import db_session
 
 
 def create_app():
-    blueprints = ['users']
     context = Flask(__name__)
 
-    for blueprint in blueprints:
-        try:
-            module = importlib.import_module('tototo.{blueprint}'.format(blueprint=blueprint))
-            context.register_blueprint(module.context)
-        except ImportError as ex:
-            pass
+    try:
+        endpoints = importlib.import_module('tototo.endpoints')
+        for blueprint in endpoints.get_blueprints():
+            context.register_blueprint(blueprint)
+    except ImportError as ex:
+        pass
 
     return context
 
