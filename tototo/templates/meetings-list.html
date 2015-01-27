@@ -21,7 +21,7 @@
           <td>{{ meeting.when.strftime('%Y-%m-%d') }}</td>
           <td>{{ meeting.name }}</td>
           <td>{{ meeting.quota }}</td>
-          <td>{{ meeting.location }}</td>
+          <td>{{ meeting.where }}</td>
           <td>
             {% if meeting.available %}
               <a href="{{ url_for('meetings.get_form_registration') }}"

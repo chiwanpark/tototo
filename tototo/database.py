@@ -49,7 +49,7 @@ class Meeting(Base):
     __tablename__ = 'meetings'
     id = Column(Integer, primary_key=True)
     name = Column(String(32), nullable=False)
-    location = Column(String(128), nullable=False)
+    where = Column(String(128), nullable=False)
     when = Column(DateTime, nullable=False)
     available = Column(Boolean, default=False)
     quota = Column(Integer, default=0)

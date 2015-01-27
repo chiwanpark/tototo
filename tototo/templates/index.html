@@ -17,7 +17,7 @@
       <h2>Next tototo</h2>
 
       {% if next_toz %}
-        <p>다음 토토토 모임은 {{ next_toz['location'] }}에서 {{ next_toz['date'].strftime('%Y년 %m월 %d일 %H시 %M분') }}에 시작됩니다.</p>
+        <p>다음 토토토 모임은 {{ next_toz['where'] }}에서 {{ next_toz['date'].strftime('%Y년 %m월 %d일 %H시 %M분') }}에 시작됩니다.</p>
 
         <p><a href="#" class="pure-button pure-button-primary">토토토 참여하기</a></p>
       {% else %}

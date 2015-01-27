@@ -31,17 +31,17 @@ def get_form_meeting():
 @admin_required
 def post_meeting():
     name = request.form.get('name', None)
-    location = request.form.get('location', None)
+    where = request.form.get('where', None)
     when = request.form.get('when', None)
     available = request.form.get('available', 'off') == 'on'
     quota = int(request.form.get('quota', '-1'))
 
-    if not name or not location or not when or quota == -1:
+    if not name or not where or not when or quota == -1:
         return '', 400
 
     when = datetime.strptime(when, '%Y-%m-%d %H:%M')
 
-    meeting = Meeting(name=name, location=location, when=when, available=available, quota=quota)
+    meeting = Meeting(name=name, where=where, when=when, available=available, quota=quota)
     db_session.add(meeting)
     db_session.commit()
 
