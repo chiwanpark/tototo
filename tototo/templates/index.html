@@ -7,6 +7,8 @@
       <p>매주 토요일, 토즈에 모여 각자 하고싶은 일을 하는 모임입니다. 집에서 빈둥빈둥 놀지말고 토즈에 나와 스스로에게 도움이 되는 일을 해봅시다.</p>
 
       <p>이 모임은 항상은 아니지만, NIPA에서 장소를 지원받고 있습니다.</p>
+
+      <p>지금까지 총 {{ meeting_count }}회의 토토토 모임을 가졌습니다.</p>
     </div>
   </section>
 
@@ -21,35 +23,6 @@
       {% else %}
         <p>아직 다음 토토토 모임에 대한 내용이 등록되지 않았습니다.</p>
       {% endif %}
-    </div>
-  </section>
-
-  <section id="previous" class="pure-u-1">
-    <div>
-      <h2>Previous tototo</h2>
-
-      <p>토토토는 2015년 1월에 시작되어, 지금까지 총 {{ prev_toz|length }}회 모임을 가졌습니다. 아래 목록은 지금까지 했던 토토토의 기록입니다.</p>
-
-      <table class="pure-table pure-table-bordered">
-        <thead>
-        <tr>
-          <th class="list-number">#</th>
-          <th class="list-date">날짜</th>
-          <th class="list-people">참여 인원</th>
-          <th class="list-location">장소</th>
-        </tr>
-        </thead>
-        <tbody>
-        {% for schedule in prev_toz %}
-          <tr>
-            <td class="list-number">{{ loop.index }}</td>
-            <td class="list-date">{{ schedule['date'].strftime('%Y년 %m월 %d일') }}</td>
-            <td class="list-people">{{ schedule['people']|join(', ') }}</td>
-            <td class="list-location">{{ schedule['location'] }}</td>
-          </tr>
-        {% endfor %}
-        </tbody>
-      </table>
     </div>
   </section>
 {% endblock %}
