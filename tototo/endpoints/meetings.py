@@ -11,20 +11,20 @@ context = Blueprint('meetings', __name__, url_prefix='/meetings')
 @signin_required
 def get_meetings():
     meetings = db_session.query(Meeting).all()
-    return render_template('meetings-list.html', meetings=meetings)
+    return render_template('meetings-list.html', meetings=meetings, current_user=get_current_user())
 
 
 @context.route('/<int:meeting_id>')
 @signin_required
 def get_meeting(meeting_id):
     meeting = db_session.query(Meeting).filter(Meeting.id == meeting_id).first()
-    return render_template('meeting.html', meeting=meeting)
+    return render_template('meeting.html', meeting=meeting, current_user=get_current_user())
 
 
 @context.route('/add')
 @admin_required
 def get_form_meeting():
-    return render_template('add-meeting.html')
+    return render_template('add-meeting.html', current_user=get_current_user())
 
 
 @context.route('/', methods=('POST', ))
@@ -56,8 +56,8 @@ def get_form_registration():
     next_meeting = db_session.query(Meeting).filter(Meeting.available).first()
     registration = db_session.query(Registration).filter(Registration.user == current_user, Registration.meeting == next_meeting).first()
 
-    return render_template(
-        'registration.html', participant=current_user, next_meeting=next_meeting, message=message, registration=registration)
+    return render_template('registration.html', participant=current_user, current_user=current_user, next_meeting=next_meeting,
+                           message=message, registration=registration)
 
 
 @context.route('/registration', methods=('POST', ))

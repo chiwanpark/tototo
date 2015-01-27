@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
 import re
 from flask import Blueprint, render_template, request, session, redirect, url_for
+from tototo.auth import get_current_user
 from tototo.database import db_session, User
 
 context = Blueprint('users', __name__, url_prefix='/users')
@@ -12,7 +13,7 @@ EMAIL_REGEX = re.compile(r'[^@]+@[^@]+\.[^@]+')
 def get_signin():
     message = request.args.get('message', None)
     dest = request.args.get('dest', None)
-    return render_template('signin.html', dest=dest, message=message)
+    return render_template('signin.html', dest=dest, message=message, current_user=get_current_user())
 
 
 @context.route('/signin', methods=('POST', ))
@@ -28,7 +29,7 @@ def post_signin():
         return render_template('signin.html', message='로그인 정보가 잘못되었습니다.')
 
     if not dest:
-        dest = url_for('index')
+        dest = url_for('index.get_index')
     return redirect(dest)
 
 
@@ -37,7 +38,7 @@ def get_signout():
     if 'user_id' in session:
         del session['user_id']
 
-    return redirect(url_for('index'))
+    return redirect(url_for('index.get_index'))
 
 
 @context.route('/signup')
