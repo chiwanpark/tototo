@@ -61,6 +61,12 @@ class Meeting(Base):
         registrations = db_session.query(Registration).filter(Registration.meeting_id == self.id, Registration.status == 'accepted')
         return [registration.user for registration in registrations]
 
+    def status_of(self, user: User) -> str:
+        registration = db_session.query(Registration).filter(Registration.meeting == self, Registration.user == user).first()
+        if not registration:
+            return 'not-registered'
+        return registration.status
+
     registrations = relationship('Registration', lazy='dynamic')
 
 

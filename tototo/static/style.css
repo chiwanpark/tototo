@@ -75,6 +75,12 @@ form {
   background: rgb(202, 60, 60);
 }
 
+.pure-button-success {
+  color: white;
+  text-shadow: 0 1px 1px rgba(0, 0, 0, 0.2);
+  background: rgb(28, 184, 65);
+}
+
 div.error-message {
   background: #f2dede;
   border-radius: 4px;
