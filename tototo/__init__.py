@@ -3,6 +3,7 @@ from datetime import datetime
 import importlib
 
 from flask import Flask, render_template
+from korean.ext.jinja2 import ProofreadingExtension
 from tototo import config
 from tototo.database import db_session
 
@@ -21,6 +22,7 @@ def create_app():
 
 
 app = create_app()
+app.jinja_env.add_extension(ProofreadingExtension)
 app.config['DATABASE_URI'] = config.DATABASE_URI
 app.config['SECRET_KEY'] = config.SECRET_KEY
 

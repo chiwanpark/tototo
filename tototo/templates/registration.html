@@ -1,0 +1,56 @@
+{% extends "skeleton.html" %}
+{% block content %}
+  <section class="pure-u-1">
+    <h2>Registration</h2>
+
+    <p>이번 토토토 모임에 참여하시려면, 아래의 빈칸을 채워서 토토토 모임에 참여 등록을 해주세요.</p>
+
+    {% if message %}
+      <div class="error-message">
+        <h3><i class="fa fa-times"></i> Error</h3>
+
+        <p>{{ message }}</p>
+      </div>
+    {% endif %}
+
+    <form class="pure-form pure-form-aligned" method="post" action="{{ url_for('meetings.post_registration') }}">
+      <fieldset>
+        <input type="hidden" name="meeting_id" value="{% if next_meeting %}{{ next_meeting.id }}{% endif %}"/>
+
+        <div class="pure-control-group">
+          <label for="name"><i class="fa fa-group"></i> Name</label>
+          <input type="text" id="name" name="name" class="pure-input-1-2" readonly
+                 value="{% if next_meeting %}{{ next_meeting.name }}{% endif %}"/>
+        </div>
+
+        <div class="pure-control-group">
+          <label for="when"><i class="fa fa-calendar"></i> When</label>
+          <input type="text" id="when" name="when" class="pure-input-1-2" readonly
+                 value="{% if next_meeting %}{{ next_meeting.when.strftime('%Y년 %m월 %d일') }}{% endif %}"/>
+        </div>
+
+        <div class="pure-control-group">
+          <label for="location"><i class="fa fa-home"></i> Where</label>
+          <input type="text" id="location" name="location" class="pure-input-1-2" readonly
+                 value="{% if next_meeting %}{{ next_meeting.location }}{% endif %}"/>
+        </div>
+
+        <div class="pure-control-group">
+          <label for="participant"><i class="fa fa-user"></i> Participant</label>
+          <input type="text" id="participant" name="participant" class="pure-input-1-2" readonly
+                 value="{% if participant %}{{ participant.name }}{% endif %}"/>
+        </div>
+
+        <div class="pure-control-group">
+          <label for="memo"><i class="fa fa-tasks"></i> Goal</label>
+          <textarea id="memo" name="memo" class="pure-input-1-2" placeholder="이번 토토토에서 무엇을 할 예정인가요?"
+              >{% if registration %}{{ registration.memo }}{% endif %}</textarea>
+        </div>
+
+        <div class="pure-controls">
+          <button type="submit" class="pure-button pure-button-primary"><i class="fa fa-check-circle"></i> 토토토에 참여할래요</button>
+        </div>
+      </fieldset>
+    </form>
+  </section>
+{% endblock %}

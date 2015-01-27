@@ -1,0 +1,38 @@
+{% extends "skeleton.html" %}
+{% block content %}
+  <section class="pure-u-1">
+    <h2>Tototo</h2>
+
+    <p>지금까지 열린, 그리고 앞으로 열릴 토토토 모임 정보입니다.</p>
+
+    <table class="pure-table pure-table-bordered">
+      <thead>
+      <tr>
+        <th>날짜</th>
+        <th>모임명</th>
+        <th>인원수</th>
+        <th>장소</th>
+        <th>참여</th>
+      </tr>
+      </thead>
+      <tbody>
+      {% for meeting in meetings %}
+        <tr>
+          <td>{{ meeting.when.strftime('%Y-%m-%d') }}</td>
+          <td>{{ meeting.name }}</td>
+          <td>{{ meeting.quota }}</td>
+          <td>{{ meeting.location }}</td>
+          <td>
+            {% if meeting.available %}
+              <a href="{{ url_for('meetings.get_form_registration') }}"
+                 class="pure-button pure-button-primary"><i class="fa fa-check"></i> 참여</a>
+            {% else %}
+              <a href="#" class="pure-button pure-button-disabled"><i class="fa fa-times"></i> 종료됨</a>
+            {% endif %}
+          </td>
+        </tr>
+      {% endfor %}
+      </tbody>
+    </table>
+  </section>
+{% endblock %}

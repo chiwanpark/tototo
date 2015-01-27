@@ -1,0 +1,39 @@
+{% extends "skeleton.html" %}
+{% block content %}
+  <section class="pure-u-1">
+    <h2>Add Meeting</h2>
+
+    <form class="pure-form pure-form-aligned" method="post" action="{{ url_for('meetings.post_meeting') }}">
+      <fieldset>
+        <div class="pure-control-group">
+          <label for="name"><i class="fa fa-group"></i> Name</label>
+          <input type="text" id="name" name="name" class="pure-input-1-2"/>
+        </div>
+
+        <div class="pure-control-group">
+          <label for="when"><i class="fa fa-calendar"></i> When</label>
+          <input type="text" id="when" name="when" class="pure-input-1-2"/>
+        </div>
+
+        <div class="pure-control-group">
+          <label for="location"><i class="fa fa-home"></i> Where</label>
+          <input type="text" id="location" name="location" class="pure-input-1-2"/>
+        </div>
+
+        <div class="pure-control-group">
+          <label for="quota"><i class="fa fa-sort-numeric-asc"></i> Quota</label>
+          <input type="text" id="quota" name="quota" class="pure-input-1-2"/>
+        </div>
+
+        <div class="pure-control-group">
+          <label for="available"><i class="fa fa-smile-o"></i> Available</label>
+          <input type="checkbox" id="available" name="available"/>
+        </div>
+
+        <div class="pure-controls">
+          <button type="submit" class="pure-button pure-button-primary"><i class="fa fa-check-circle"></i> 토토토 모임 등록</button>
+        </div>
+      </fieldset>
+    </form>
+  </section>
+{% endblock %}

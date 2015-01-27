@@ -1,0 +1,19 @@
+{% extends "skeleton.html" %}
+{% block content %}
+  <section class="pure-u-1">
+    <h2>Tototo Information</h2>
+
+    <p>"{{ meeting.name }}" 모임은 {{ meeting.users|length }}명이 참여했습니다.
+      {{ meeting.when.strftime('%Y년 %m월 %d일 %H시 %M분') }}에 {{ meeting.location }}에 모여 각자 자기 할 일을 했습니다.</p>
+
+    <div class="pure-g">
+      {% for registration in meeting.registrations %}
+        <div class="pure-u-1 pure-u-md-1-2">
+          <h3>{{ registration.user.name }}</h3>
+
+          <p>{{ registration.memo }}</p>
+        </div>
+      {% endfor %}
+    </div>
+  </section>
+{% endblock %}

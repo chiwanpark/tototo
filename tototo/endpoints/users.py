@@ -10,8 +10,9 @@ EMAIL_REGEX = re.compile(r'[^@]+@[^@]+\.[^@]+')
 
 @context.route('/signin')
 def get_signin():
+    message = request.args.get('message', None)
     dest = request.args.get('dest', None)
-    return render_template('signin.html', dest=dest)
+    return render_template('signin.html', dest=dest, message=message)
 
 
 @context.route('/signin', methods=('POST', ))
