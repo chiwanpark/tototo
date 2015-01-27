@@ -3,6 +3,10 @@ html, button, input, select, textarea,
   font-family: "Open Sans", "NanumBarunGothicLight", sans-serif;
 }
 
+header {
+  text-align: center;
+}
+
 h1 {
   text-align: center;
   font-size: 1.6em;

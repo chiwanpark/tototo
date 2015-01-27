@@ -26,6 +26,9 @@
       tototo.chiwanpark.com
       <span>토요일! 토요일은 토즈다</span>
     </h1>
+
+    <a href="{{ url_for('index.get_index') }}" class="pure-button pure-button-primary"><i class="fa fa-home"></i> 첫 페이지</a>
+    <a href="{{ url_for('meetings.get_meetings') }}" class="pure-button pure-button-primary"><i class="fa fa-calendar"></i> 토토토</a>
   </header>
 
   {% block content %}{% endblock %}
