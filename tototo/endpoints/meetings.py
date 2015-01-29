@@ -1,8 +1,11 @@
 # -*- coding: utf-8 -*-
 from datetime import datetime
+
 from flask import Blueprint, render_template, request, redirect, url_for
+from tototo import config
 from tototo.auth import signin_required, admin_required, get_current_user
 from tototo.database import Registration, db_session, Meeting
+
 
 context = Blueprint('meetings', __name__, url_prefix='/meetings')
 
@@ -39,7 +42,7 @@ def post_meeting():
     if not name or not where or not when or quota == -1:
         return '', 400
 
-    when = datetime.strptime(when, '%Y-%m-%d %H:%M')
+    when = config.TIMEZONE.localize(datetime.strptime(when, '%Y-%m-%d %H:%M'))
 
     meeting = Meeting(name=name, where=where, when=when, available=available, quota=quota)
     db_session.add(meeting)

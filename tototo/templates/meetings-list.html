@@ -10,7 +10,7 @@
       <tr>
         <th>날짜</th>
         <th>모임명</th>
-        <th>최대 인원수</th>
+        <th>인원수</th>
         <th>장소</th>
         <th>참여</th>
       </tr>
@@ -20,7 +20,7 @@
         <tr>
           <td>{{ meeting.when.strftime('%Y-%m-%d') }}</td>
           <td><a href="{{ url_for('meetings.get_meeting', meeting_id=meeting.id) }}">{{ meeting.name }}</a></td>
-          <td>{{ meeting.quota }}</td>
+          <td>{{ meetings.users|length }}명 / {{ meeting.quota }}명</td>
           <td>{{ meeting.where }}</td>
           <td>
             {% if meeting.available %}

@@ -15,6 +15,10 @@ Base = declarative_base()
 Base.query = db_session.query_property()
 
 
+def datetime_now():
+    return config.TIMEZONE.localize(datetime.now())
+
+
 class User(Base):
     __tablename__ = 'users'
     id = Column(Integer, primary_key=True)
@@ -24,7 +28,7 @@ class User(Base):
 
     hashed_password = Column(String(60), nullable=False)
 
-    registered = Column(DateTime(timezone=True), default=datetime.now)
+    registered = Column(DateTime(timezone=True), default=datetime_now)
 
     class CryptComparator(Comparator):
         def __eq__(self, other):
@@ -50,11 +54,11 @@ class Meeting(Base):
     id = Column(Integer, primary_key=True)
     name = Column(String(32), nullable=False)
     where = Column(String(128), nullable=False)
-    when = Column(DateTime, nullable=False)
+    when = Column(DateTime(timezone=True), nullable=False)
     available = Column(Boolean, default=False)
     quota = Column(Integer, default=0)
 
-    registered = Column(DateTime(timezone=True), default=datetime.now)
+    registered = Column(DateTime(timezone=True), default=datetime_now)
 
     @hybrid_property
     def users(self):
@@ -78,8 +82,8 @@ class Registration(Base):
     status = Column(String(16), default='waiting')  #: waiting, accepted, cancelled, refused
     memo = Column(String(512))
 
-    registered = Column(DateTime(timezone=True), default=datetime.now)
-    updated = Column(DateTime(timezone=True), default=datetime.now, onupdate=datetime.now)
+    registered = Column(DateTime(timezone=True), default=datetime_now)
+    updated = Column(DateTime(timezone=True), default=datetime_now, onupdate=datetime_now)
 
     meeting = relationship('Meeting')
     user = relationship('User')
