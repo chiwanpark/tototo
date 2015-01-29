@@ -26,14 +26,15 @@
             {% if meeting.available %}
               {% set status = meeting.status_of(current_user) %}
               {% if status == 'accepted' %}
-                <a href="{{ url_for('meetings.get_form_registration') }}"
+                <a href="{{ url_for('meetings.get_form_registration', meeting_id=meeting.id) }}"
                    class="pure-button pure-button-success"><i class="fa fa-check"></i> 수락됨</a>
               {% else %}
-                <a href="{{ url_for('meetings.get_form_registration') }}"
+                <a href="{{ url_for('meetings.get_form_registration', meeting_id=meeting.id) }}"
                    class="pure-button pure-button-primary"><i class="fa fa-check"></i> 개설됨</a>
               {% endif %}
             {% else %}
-              <a href="#" class="pure-button pure-button-disabled"><i class="fa fa-times"></i> 종료됨</a>
+              <a href="{{ url_for('meetings.get_form_registration', meeting_id=meeting.id) }}"
+                 class="pure-button pure-button-disabled"><i class="fa fa-times"></i> 종료됨</a>
             {% endif %}
           </td>
         </tr>
