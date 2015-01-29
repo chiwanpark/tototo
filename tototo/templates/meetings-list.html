@@ -20,7 +20,7 @@
         <tr>
           <td class="meeting-list-when">{{ meeting.when|localtime_format('%Y-%m-%d') }}</td>
           <td class="meeting-list-name"><a href="{{ url_for('meetings.get_meeting', meeting_id=meeting.id) }}">{{ meeting.name }}</a></td>
-          <td class="meeting-list-quota">{{ meetings.users|length }}명 / {{ meeting.quota }}명</td>
+          <td class="meeting-list-quota">{{ meeting.users|length }}명 / {{ meeting.quota }}명</td>
           <td class="meeting-list-where">{{ meeting.where }}</td>
           <td class="meeting-list-action">
             {% if meeting.available %}
