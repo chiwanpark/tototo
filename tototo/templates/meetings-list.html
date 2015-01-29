@@ -8,21 +8,21 @@
     <table class="pure-table pure-table-bordered">
       <thead>
       <tr>
-        <th>날짜</th>
-        <th>모임명</th>
-        <th>인원수</th>
-        <th>장소</th>
-        <th>참여</th>
+        <th class="meeting-list-when">날짜</th>
+        <th class="meeting-list-name">모임명</th>
+        <th class="meeting-list-quota">인원수</th>
+        <th class="meeting-list-where">장소</th>
+        <th class="meeting-list-action">참여</th>
       </tr>
       </thead>
       <tbody>
       {% for meeting in meetings %}
         <tr>
-          <td>{{ meeting.when.strftime('%Y-%m-%d') }}</td>
-          <td><a href="{{ url_for('meetings.get_meeting', meeting_id=meeting.id) }}">{{ meeting.name }}</a></td>
-          <td>{{ meetings.users|length }}명 / {{ meeting.quota }}명</td>
-          <td>{{ meeting.where }}</td>
-          <td>
+          <td class="meeting-list-when">{{ meeting.when.strftime('%Y-%m-%d') }}</td>
+          <td class="meeting-list-name"><a href="{{ url_for('meetings.get_meeting', meeting_id=meeting.id) }}">{{ meeting.name }}</a></td>
+          <td class="meeting-list-quota">{{ meetings.users|length }}명 / {{ meeting.quota }}명</td>
+          <td class="meeting-list-where">{{ meeting.where }}</td>
+          <td class="meeting-list-action">
             {% if meeting.available %}
               {% set status = meeting.status_of(current_user) %}
               {% if status == 'accepted' %}

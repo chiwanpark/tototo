@@ -56,24 +56,6 @@ table {
   margin: 20px auto;
 }
 
-@media only screen and (max-width: 480px) {
-  table .list-number {
-    display: none;
-  }
-
-  table .list-date {
-    width: 50%;
-  }
-
-  table .list-people {
-    display: none;
-  }
-
-  table .list-location {
-    width: 50%;
-  }
-}
-
 form {
   margin: 0 auto;
 }
@@ -147,4 +129,18 @@ footer {
   font-size: 0.8em;
   text-align: center;
   margin: 10px 0;
+}
+
+@media only screen and (max-width: 480px) {
+  .pure-button {
+    font-size: 0.8em;
+  }
+
+  table .meeting-list-when, table .meeting-list-quota {
+    display: none;
+  }
+
+  .pure-form .pure-input-1-2 {
+    width: 100%;
+  }
 }
