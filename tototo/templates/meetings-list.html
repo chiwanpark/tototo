@@ -18,7 +18,7 @@
       <tbody>
       {% for meeting in meetings %}
         <tr>
-          <td class="meeting-list-when">{{ meeting.when.strftime('%Y-%m-%d') }}</td>
+          <td class="meeting-list-when">{{ meeting.when|localtime_format('%Y-%m-%d') }}</td>
           <td class="meeting-list-name"><a href="{{ url_for('meetings.get_meeting', meeting_id=meeting.id) }}">{{ meeting.name }}</a></td>
           <td class="meeting-list-quota">{{ meetings.users|length }}명 / {{ meeting.quota }}명</td>
           <td class="meeting-list-where">{{ meeting.where }}</td>

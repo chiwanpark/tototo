@@ -4,7 +4,7 @@
     <h2>토토토 모임 정보</h2>
 
     <p>"{{ meeting.name }}" 모임은 {{ meeting.users|length }}명이 참여했습니다.
-      {{ meeting.when.strftime('%Y년 %m월 %d일 %H시 %M분') }}에 {{ meeting.where }}에 모여 각자 자기 할 일을 했습니다.</p>
+      {{ meeting.when|localtime_format('%Y년 %m월 %d일 %H시 %M분') }}에 {{ meeting.where }}에 모여 각자 자기 할 일을 했습니다.</p>
   </section>
 
   <section class="pure-u-1">
