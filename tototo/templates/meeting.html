@@ -14,13 +14,15 @@
 
     <div class="wishlist pure-g">
       {% for registration in meeting.registrations %}
-        <div class="pure-u-1 pure-u-md-1-2">
-          <div class="registration">
-            <h3>{{ registration.user.name }}</h3>
+        {% if registration.status == 'accepted' %}
+          <div class="pure-u-1 pure-u-md-1-2">
+            <div class="registration">
+              <h3>{{ registration.user.name }}</h3>
 
-            <p>{{ registration.memo }}</p>
+              <p>{{ registration.memo }}</p>
+            </div>
           </div>
-        </div>
+        {% endif %}
       {% endfor %}
     </div>
   </section>

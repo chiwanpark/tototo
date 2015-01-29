@@ -31,6 +31,8 @@
     <a href="{{ url_for('meetings.get_meetings') }}" class="pure-button pure-button-primary"><i class="fa fa-calendar"></i> 토토토</a>
     {% if current_user %}
       <a href="{{ url_for('users.get_signout') }}" class="pure-button pure-button-primary"><i class="fa fa-sign-out"></i> 로그아웃</a>
+    {% else %}
+      <a href="{{ url_for('users.get_signin') }}" class="pure-button pure-button-primary"><i class="fa fa-sign-in"></i> 로그인</a>
     {% endif %}
   </header>
 
