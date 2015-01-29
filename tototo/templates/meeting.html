@@ -5,13 +5,21 @@
 
     <p>"{{ meeting.name }}" 모임은 {{ meeting.users|length }}명이 참여했습니다.
       {{ meeting.when.strftime('%Y년 %m월 %d일 %H시 %M분') }}에 {{ meeting.where }}에 모여 각자 자기 할 일을 했습니다.</p>
+  </section>
 
-    <div class="pure-g">
+  <section class="pure-u-1">
+    <h2>Goal of This Tototo</h2>
+
+    <p>이번 토토토 참여자들은 토토토 모임에서 아래와 같은 일들을 하기로 했습니다.</p>
+
+    <div class="wishlist pure-g">
       {% for registration in meeting.registrations %}
         <div class="pure-u-1 pure-u-md-1-2">
-          <h3>{{ registration.user.name }}</h3>
+          <div class="registration">
+            <h3>{{ registration.user.name }}</h3>
 
-          <p>{{ registration.memo }}</p>
+            <p>{{ registration.memo }}</p>
+          </div>
         </div>
       {% endfor %}
     </div>
