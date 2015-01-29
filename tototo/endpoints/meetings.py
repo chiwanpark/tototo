@@ -59,6 +59,10 @@ def get_form_registration():
     next_meeting = db_session.query(Meeting).filter(Meeting.available).first()
     registration = db_session.query(Registration).filter(Registration.user == current_user, Registration.meeting == next_meeting).first()
 
+    if not next_meeting or len(next_meeting.users) >= next_meeting.quota:
+        return render_template('meeting.html', message='이미 끝난 모임이거나, 정원이 다 차버린 모임입니다.', meeting=next_meeting,
+                               current_user=get_current_user())
+
     return render_template('registration.html', participant=current_user, current_user=current_user, next_meeting=next_meeting,
                            message=message, registration=registration)
 

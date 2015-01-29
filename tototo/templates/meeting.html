@@ -1,5 +1,15 @@
 {% extends "skeleton.html" %}
 {% block content %}
+  {% if message %}
+    <section class="pure-u-1">
+      <div class="error-message">
+        <h3><i class="fa fa-times"></i> Error</h3>
+
+        <p>{{ message }}</p>
+      </div>
+    </section>
+  {% endif %}
+
   <section class="pure-u-1">
     <h2>토토토 모임 정보</h2>
 
