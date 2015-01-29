@@ -130,6 +130,10 @@ div.wishlist div.registration {
   margin: 8px;
 }
 
+span.emphasis {
+  font-weight: bold;
+}
+
 div.wishlist div > h3 {
   margin: 4px 0;
   padding: 0;

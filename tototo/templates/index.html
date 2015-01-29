@@ -16,10 +16,10 @@
     <div>
       <h2>Next tototo</h2>
 
-      {% if next_toz %}
-        <p>다음 토토토 모임은 {{ next_toz['where'] }}에서 {{ next_toz['date'].strftime('%Y년 %m월 %d일 %H시 %M분') }}에 시작됩니다.</p>
-
-        <p><a href="#" class="pure-button pure-button-primary">토토토 참여하기</a></p>
+      {% if next_meeting %}
+        <p>다음 토토토 모임은 <span class="emphasis">{{ next_meeting.where }}</span>에서
+          <span class="emphasis">{{ next_meeting.when.strftime('%Y년 %m월 %d일 %H시 %M분') }}</span>에 시작됩니다.
+          지금 토토토 메뉴를 클릭해 토토토 모임에 참여해보세요.</p>
       {% else %}
         <p>아직 다음 토토토 모임에 대한 내용이 등록되지 않았습니다.</p>
       {% endif %}
