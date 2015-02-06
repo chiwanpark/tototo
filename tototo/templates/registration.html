@@ -26,7 +26,7 @@
         <div class="pure-control-group">
           <label for="when"><i class="fa fa-calendar"></i> When</label>
           <input type="text" id="when" name="when" class="pure-input-1-2" readonly
-                 value="{% if next_meeting %}{{ next_meeting.when|localtime_format('%Y년 %m월 %d일 %H시 %M분') }}{% endif %}"/>
+                 value="{% if next_meeting %}{{ next_meeting.when | localtime_format('%Y년 %m월 %d일 %H시 %M분') }}{% endif %}"/>
         </div>
 
         <div class="pure-control-group">

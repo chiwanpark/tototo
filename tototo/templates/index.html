@@ -18,7 +18,7 @@
 
       {% if next_meeting %}
         <p>다음 토토토 모임은 <span class="emphasis">{{ next_meeting.where }}</span>에서
-          <span class="emphasis">{{ next_meeting.when|localtime_format('%Y년 %m월 %d일 %H시 %M분') }}</span>에 시작됩니다.
+          <span class="emphasis">{{ next_meeting.when | localtime_format('%Y년 %m월 %d일 %H시 %M분') }}</span>에 시작됩니다.
           지금 토토토 메뉴를 클릭해 토토토 모임에 참여해보세요.</p>
       {% else %}
         <p>아직 다음 토토토 모임에 대한 내용이 등록되지 않았습니다.</p>
