@@ -75,18 +75,20 @@ def post_registration():
     meeting_id = int(request.form.get('meeting_id', '-1'))
 
     if not memo:
-        return redirect(url_for('meetings.get_form_registration', message='모임에서 달성할 목표는 반드시 입력해야합니다.'))
+        return redirect(url_for('meetings.get_form_registration', meeting_id=meeting_id, message='모임에서 달성할 목표는 반드시 입력해야합니다.'))
 
     meeting = db_session.query(Meeting).filter(Meeting.id == meeting_id).first()
-    if not meeting or not meeting.available or len(meeting.users) >= meeting.quota:
-        return redirect(url_for('meetings.get_form_registration', message='해당 모임에는 참가할 수 없습니다.'))
+    if not meeting:
+        return redirect(url_for('meetings.get_form_registration', meeting_id=meeting_id, message='해당 모임이 존재하지 않습니다.'))
 
     registration = db_session.query(Registration).filter(Registration.user == participant, Registration.meeting == meeting).first()
     if not registration:
+        if not meeting.available or len(meeting.users) >= meeting.quota:
+            return redirect(url_for('meetings.get_form_registration', meeting_id=meeting_id, message='해당 모임에는 참가할 수 없습니다.'))
         registration = Registration(user_id=participant.id, meeting_id=meeting_id)
 
     registration.memo = memo
     db_session.add(registration)
     db_session.commit()
 
-    return redirect(url_for('meetings.get_meetings'))
+    return redirect(url_for('meetings.get_meeting', meeting_id=meeting_id))
