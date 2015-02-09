@@ -52,6 +52,10 @@ div > p {
   margin: 7px 0;
 }
 
+div > textarea {
+  min-height: 200px;
+}
+
 table {
   margin: 20px auto;
 }
@@ -142,5 +146,9 @@ footer {
 
   .pure-form .pure-input-1-2 {
     width: 100%;
+  }
+
+  div > textarea {
+    min-height: 100px;
   }
 }
