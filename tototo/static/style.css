@@ -120,6 +120,10 @@ div.wishlist div.registration {
   margin: 8px;
 }
 
+div.wishlist div.waiting {
+  border-left-color: rgb(240, 173, 78);
+}
+
 span.emphasis {
   font-weight: bold;
 }

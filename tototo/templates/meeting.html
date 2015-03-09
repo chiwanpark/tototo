@@ -32,6 +32,14 @@
               <p>{{ registration.memo | nl2br }}</p>
             </div>
           </div>
+        {% elif registration.status == 'waiting' %}
+          <div class="pure-u-1 pure-u-md-1-2">
+            <div class="registration waiting">
+              <h3>{{ registration.user.name }} (대기중)</h3>
+
+              <p>{{ registration.memo | nl2br }}</p>
+            </div>
+          </div>
         {% endif %}
       {% endfor %}
     </div>
