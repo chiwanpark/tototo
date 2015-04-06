@@ -29,7 +29,7 @@
             <div class="registration">
               <h3>{{ registration.user.name }}</h3>
 
-              <p>{{ registration.memo | nl2br }}</p>
+              <p>{{ registration.memo | html_filter }}</p>
             </div>
           </div>
         {% elif registration.status == 'waiting' %}
@@ -37,7 +37,7 @@
             <div class="registration waiting">
               <h3>{{ registration.user.name }} (대기중)</h3>
 
-              <p>{{ registration.memo | nl2br }}</p>
+              <p>{{ registration.memo | html_filter }}</p>
             </div>
           </div>
         {% endif %}

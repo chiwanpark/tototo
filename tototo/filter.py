@@ -5,7 +5,9 @@ import re
 from jinja2 import evalcontextfilter, escape, Markup
 from tototo import config, app
 
+
 _paragraph_re = re.compile(r'(?:\r\n|\r|\n){2,}')
+_image_re = re.compile(r'\[image\|http(?P<src>.*?)\]')
 
 
 @app.template_filter()
@@ -15,8 +17,9 @@ def localtime_format(value: datetime, fmt: str):
 
 @app.template_filter()
 @evalcontextfilter
-def nl2br(ctx, value):
+def html_filter(ctx, value):
     result = u'\n\n'.join(u'<p>%s</p>' % p.replace('\n', '<br>\n') for p in _paragraph_re.split(escape(value)))
+    result = _image_re.sub('<img class="user-image" src="http\g<src>"/>', result)
     if ctx.autoescape:
         result = Markup(result)
     return result

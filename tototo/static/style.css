@@ -132,6 +132,10 @@ span.emphasis {
   font-weight: bold;
 }
 
+img.user-image {
+  max-width: 150px;
+}
+
 div.wishlist div > h3 {
   margin: 4px 0;
   padding: 0;
