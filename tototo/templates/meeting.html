@@ -40,6 +40,14 @@
               <p>{{ registration.memo | html_filter }}</p>
             </div>
           </div>
+        {% elif registration.status == 'not-attended' %}
+          <div class="pure-u-1 pure-u-md-1-2">
+            <div class="registration not-attended">
+              <h3>{{ registration.user.name }} (신청 후 불참)</h3>
+
+              <p>{{ registration.memo | html_filter }}</p>
+            </div>
+          </div>
         {% endif %}
       {% endfor %}
     </div>
