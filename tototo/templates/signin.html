@@ -27,6 +27,8 @@
 
         <div class="pure-controls">
           <button type="submit" class="pure-button pure-button-primary"><i class="fa fa-sign-in"></i> 로그인</button>
+          <a href="{{ url_for('users.get_find_password') }}" class="pure-button"><i class="fa fa-question"
+              ></i> 비밀번호 찾기</a>
           <a href="{{ url_for('users.get_signup') }}" class="pure-button"><i class="fa fa-user-plus"></i> 가입하기</a>
         </div>
       </fieldset>
