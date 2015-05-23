@@ -22,7 +22,7 @@ def get_meetings():
 @signin_required
 def get_meeting(meeting_id):
     meeting = db_session.query(Meeting).filter(Meeting.id == meeting_id).first()
-    return render_template('meeting.html', meeting=meeting, current_user=get_current_user())
+    return render_template('meeting.html', meeting=meeting, current_user=get_current_user(), config=config)
 
 
 @context.route('/add')

@@ -145,6 +145,10 @@ div.wishlist div > h3 {
   padding: 0;
 }
 
+div#location-map {
+  height: 350px;
+}
+
 footer {
   font-size: 0.8em;
   text-align: center;
@@ -170,5 +174,9 @@ footer {
 
   div > textarea {
     min-height: 100px;
+  }
+
+  div#location-map {
+    height: 200px;
   }
 }

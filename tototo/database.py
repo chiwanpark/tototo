@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 from datetime import datetime
 
-from sqlalchemy import create_engine, Column, Integer, String, Boolean, ForeignKey, DateTime, func
+from sqlalchemy import create_engine, Column, Integer, String, Boolean, ForeignKey, DateTime, func, text, Float
 from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy.ext.hybrid import hybrid_property, Comparator
 from sqlalchemy.orm import scoped_session, sessionmaker, relationship
@@ -55,7 +55,10 @@ class Meeting(Base):
     name = Column(String(32), nullable=False)
     where = Column(String(128), nullable=False)
     when = Column(DateTime(timezone=True), nullable=False)
+    when_end = Column(DateTime(timezone=True), default=datetime_now, nullable=False)
     available = Column(Boolean, default=False)
+    location_lat = Column(Float, default=0.0, server_default=text('0.0'))
+    location_lng = Column(Float, default=0.0, server_default=text('0.0'))
     quota = Column(Integer, default=0)
 
     registered = Column(DateTime(timezone=True), default=datetime_now)

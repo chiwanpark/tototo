@@ -17,6 +17,9 @@
 
   <!-- Custom CSS -->
   <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='style.css') }}"/>
+
+  <!-- Custom Javascript -->
+  {% block script %}{% endblock %}
 </head>
 <body>
 <div id="wrapper" class="pure-g">

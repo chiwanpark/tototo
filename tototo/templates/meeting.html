@@ -1,4 +1,34 @@
 {% extends "skeleton.html" %}
+{% block script %}
+  <script type="text/javascript" src="//apis.daum.net/maps/maps3.js?apikey={{ config.DAUM_MAP_API_KEY }}"></script>
+  <script type="text/javascript">
+    window.onload = function () {
+      var mapContainer = document.getElementById('location-map');
+      var mapOption = {
+        center: new daum.maps.LatLng({{ meeting.location_lat }}, {{ meeting.location_lng }}),
+        draggable: false,
+        level: 3
+      };
+
+      var map = new daum.maps.Map(mapContainer, mapOption);
+      var marker = new daum.maps.Marker({
+        position: new daum.maps.LatLng({{ meeting.location_lat }}, {{ meeting.location_lng }})
+      });
+      var iwContent = '<div style="padding: 5px;">{{ meeting.where }} (' +
+          '<a target="_blank" href="http://map.daum.net/link/map/{{ meeting.where }},{{ meeting.location_lat }},' +
+          '{{ meeting.location_lng }}">다음 지도</a>)</div>';
+      var infoWindow = new daum.maps.InfoWindow({
+        position: new daum.maps.LatLng({{ meeting.location_lat }}, {{ meeting.location_lng }}),
+        content: iwContent
+      });
+      var zoomControl = new daum.maps.ZoomControl();
+      map.addControl(zoomControl, daum.maps.ControlPosition.RIGHT);
+
+      marker.setMap(map);
+      infoWindow.open(map, marker);
+    };
+  </script>
+{% endblock %}
 {% block content %}
   {% if message %}
     <section class="pure-u-1">
@@ -13,8 +43,17 @@
   <section class="pure-u-1">
     <h2>토토토 모임 정보</h2>
 
-    <p>"{{ meeting.name }}" 모임은 {{ meeting.users | length }}명이 참여했습니다.
-      {{ meeting.when | localtime_format('%Y년 %m월 %d일 %H시 %M분') }}에 {{ meeting.where }}에 모여 각자 자기 할 일을 했습니다.</p>
+    <p>"{{ meeting.name }}"은 {{ meeting.users | length }}명이 참여했습니다.
+      모임은 {{ meeting.when | localtime_format('%Y년 %m월 %d일 %H시 %M분') }}에 시작해서
+      {{ meeting.when_end | localtime_format('%Y년 %m월 %d일 %H시 %M분') }}에 끝났습니다.</p>
+  </section>
+
+  <section class="pure-u-1">
+    <h2>모임 장소 정보</h2>
+
+    <p>"{{ meeting.name }}"은 {{ meeting.where }}에서 열렸습니다. 자세한 위치는 아래 지도를 참고해주세요.</p>
+
+    <div id="location-map"></div>
   </section>
 
   <section class="pure-u-1">
