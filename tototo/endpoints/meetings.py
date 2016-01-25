@@ -36,16 +36,20 @@ def get_form_meeting():
 def post_meeting():
     name = request.form.get('name', None)
     where = request.form.get('where', None)
+    location_lat = float(request.form.get('location_lat', '0.0'))
+    location_lng = float(request.form.get('location_lng', '0.0'))
     when = request.form.get('when', None)
     available = request.form.get('available', 'off') == 'on'
     quota = int(request.form.get('quota', '-1'))
 
-    if not name or not where or not when or quota == -1:
+    if not name or not where or not when or quota == -1 or location_lat < 0.1 or location_lng < 0.1:
         return '', 400
 
     when = config.TIMEZONE.localize(datetime.strptime(when, '%Y-%m-%d %H:%M'))
 
-    meeting = Meeting(name=name, where=where, when=when, available=available, quota=quota)
+    meeting = Meeting(
+        name=name, where=where, when=when, available=available, quota=quota, location_lat=location_lat,
+        location_lng=location_lng)
     db_session.add(meeting)
     db_session.commit()
 
