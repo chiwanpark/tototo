@@ -5,6 +5,13 @@
 
     <p>지금까지 열린, 그리고 앞으로 열릴 토토토 모임 정보입니다.</p>
 
+    {% if current_user.is_admin %}
+      <div>
+        <a href="{{ url_for('meetings.get_form_meeting') }}"
+           class="pure-button pure-button-primary"><i class="fa fa-plus"></i> 새 토토토 모임 개설하기</a>
+      </div>
+    {% endif %}
+
     <table class="pure-table pure-table-bordered">
       <thead>
       <tr>
@@ -13,6 +20,9 @@
         <th class="meeting-list-quota">인원수</th>
         <th class="meeting-list-where">장소</th>
         <th class="meeting-list-action">참여</th>
+        {% if current_user.is_admin %}
+          <th class="meeting-list-admin">관리</th>
+        {% endif %}
       </tr>
       </thead>
       <tbody>
@@ -37,6 +47,12 @@
                  class="pure-button pure-button-disabled"><i class="fa fa-times"></i> 종료됨</a>
             {% endif %}
           </td>
+          {% if current_user.is_admin %}
+            <td class="meeting-list-admin">
+              <a href="{{ url_for('meetings.form_modify_meeting', meeting_id=meeting.id) }}"
+                 class="pure-button pure-button-primary"><i class="fa fa-edit"></i> 수정</a>
+            </td>
+          {% endif %}
         </tr>
       {% endfor %}
       </tbody>

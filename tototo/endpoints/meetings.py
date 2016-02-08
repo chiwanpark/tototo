@@ -12,28 +12,33 @@ context = Blueprint('meetings', __name__, url_prefix='/meetings')
 
 
 @context.route('/')
-@signin_required
 def get_meetings():
     meetings = db_session.query(Meeting).order_by(desc(Meeting.registered)).all()
     return render_template('meetings-list.html', meetings=meetings, current_user=get_current_user())
 
 
 @context.route('/<int:meeting_id>')
-@signin_required
 def get_meeting(meeting_id):
     meeting = db_session.query(Meeting).filter(Meeting.id == meeting_id).first()
     return render_template('meeting.html', meeting=meeting, current_user=get_current_user(), config=config)
 
 
-@context.route('/add')
+@context.route('/<int:meeting_id>/modify')
+@admin_required
+def form_modify_meeting(meeting_id):
+    meeting = db_session.query(Meeting).filter(Meeting.id == meeting_id).first()
+    if not meeting:
+        return render_template('error.html', current_user=get_current_user(), message='해당 모임 정보가 없습니다.')
+    return render_template('form-meeting.html', meeting=meeting, current_user=get_current_user(), config=config)
+
+
+@context.route('/new')
 @admin_required
 def get_form_meeting():
-    return render_template('add-meeting.html', current_user=get_current_user())
+    return render_template('form-meeting.html', current_user=get_current_user(), config=config)
 
 
-@context.route('/', methods=('POST', ))
-@admin_required
-def post_meeting():
+def get_meeting_data_from_request():
     name = request.form.get('name', None)
     where = request.form.get('where', None)
     location_lat = float(request.form.get('location_lat', '0.0'))
@@ -43,7 +48,45 @@ def post_meeting():
     quota = int(request.form.get('quota', '-1'))
 
     if not name or not where or not when or quota == -1 or location_lat < 0.1 or location_lng < 0.1:
-        return '', 400
+        raise ValueError()
+
+    return name, where, location_lat, location_lng, when, available, quota
+
+
+@context.route('/<int:meeting_id>/modify', methods=('POST',))
+@admin_required
+def modify_meeting(meeting_id):
+    try:
+        name, where, location_lat, location_lng, when, available, quota = get_meeting_data_from_request()
+    except ValueError:
+        return render_template('error.html', current_user=get_current_user(), message='잘못된 요청입니다.'), 400
+
+    meeting = db_session.query(Meeting).filter(Meeting.id == meeting_id).first()
+    if not meeting:
+        return render_template('error.html', current_user=get_current_user(), message='해당 모임 정보가 없습니다.')
+
+    when = config.TIMEZONE.localize(datetime.strptime(when, '%Y-%m-%d %H:%M'))
+
+    meeting.name = name
+    meeting.where = where
+    meeting.location_lat = location_lat
+    meeting.location_lng = location_lng
+    meeting.when = when
+    meeting.available = available
+    meeting.quota = quota
+    db_session.add(meeting)
+    db_session.commit()
+
+    return redirect(url_for('meetings.get_meetings'))
+
+
+@context.route('/', methods=('POST', ))
+@admin_required
+def post_meeting():
+    try:
+        name, where, location_lat, location_lng, when, available, quota = get_meeting_data_from_request()
+    except ValueError:
+        return render_template('error.html', current_user=get_current_user(), message='잘못된 요청입니다.'), 400
 
     when = config.TIMEZONE.localize(datetime.strptime(when, '%Y-%m-%d %H:%M'))
 
@@ -56,7 +99,7 @@ def post_meeting():
     return redirect(url_for('meetings.get_meetings'))
 
 
-@context.route('/registration/<int:meeting_id>')
+@context.route('/<int:meeting_id>/registration')
 @signin_required
 def get_form_registration(meeting_id):
     message = request.args.get('message', None)
@@ -72,12 +115,11 @@ def get_form_registration(meeting_id):
                            message=message, registration=registration)
 
 
-@context.route('/registration', methods=('POST', ))
+@context.route('/<int:meeting_id>/registration', methods=('POST', ))
 @signin_required
-def post_registration():
+def post_registration(meeting_id):
     participant = get_current_user()
     memo = request.form.get('memo', None)
-    meeting_id = int(request.form.get('meeting_id', '-1'))
 
     if not memo:
         return redirect(url_for('meetings.get_form_registration', meeting_id=meeting_id, message='모임에서 달성할 목표는 반드시 입력해야합니다.'))
@@ -93,6 +135,25 @@ def post_registration():
         registration = Registration(user_id=participant.id, meeting_id=meeting_id)
 
     registration.memo = memo
+    db_session.add(registration)
+    db_session.commit()
+
+    return redirect(url_for('meetings.get_meeting', meeting_id=meeting_id))
+
+
+@context.route('/<int:meeting_id>/registration/<int:registration_id>/manage', methods=('POST',))
+@admin_required
+def manage_registration(meeting_id, registration_id):
+    registration = db_session.query(Registration).filter(Registration.id == registration_id).first()
+    if not registration:
+        return render_template('error.html', message='해당 참가 신청이 존재하지 않습니다.')
+    if meeting_id != registration.meeting_id:
+        return render_template('error.html', message='해당 참가 신청 데이터가 잘못되었습니다. (not matched meeting id)')
+    status = request.form.get('status', None)
+    if status not in ['waiting', 'accepted', 'cancelled', 'refused', 'not-attended']:
+        return render_template('error.html', message='참가 신청 상태 정보가 잘못되었습니다. (' + str(status) + ')')
+
+    registration.status = status
     db_session.add(registration)
     db_session.commit()
 

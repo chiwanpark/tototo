@@ -13,10 +13,13 @@
       </div>
     {% endif %}
 
-    <form class="pure-form pure-form-aligned" method="post" action="{{ url_for('meetings.post_registration') }}">
+    {% if next_meeting %}
+      {% set next_meeting_id = next_meeting.id %}
+    {% else %}
+      {% set next_meeting_id = -1 %}
+    {% endif %}
+    <form class="pure-form pure-form-aligned" method="post" action="{{ url_for('meetings.post_registration', meeting_id=next_meeting_id) }}">
       <fieldset>
-        <input type="hidden" name="meeting_id" value="{% if next_meeting %}{{ next_meeting.id }}{% endif %}"/>
-
         <div class="pure-control-group">
           <label for="name"><i class="fa fa-group"></i> Name</label>
           <input type="text" id="name" name="name" class="pure-input-1-2" readonly

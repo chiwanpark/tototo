@@ -80,6 +80,12 @@ form {
   background: rgb(28, 184, 65);
 }
 
+.pure-button-black {
+  color: white;
+  text-shadow: 0 1px 1px rgba(0, 0, 0, 0.2);
+  background: rgb(0, 0, 0);
+}
+
 div.error-message {
   background: #f2dede;
   border-radius: 4px;
@@ -132,6 +138,10 @@ div.wishlist div.not-attended {
   border-left-color: rgb(202, 60, 60);
 }
 
+div.wishlist div.refused {
+  border-left-color: rgb(0, 0, 0);
+}
+
 span.emphasis {
   font-weight: bold;
 }
@@ -147,6 +157,7 @@ div.wishlist div > h3 {
 
 div#location-map {
   height: 350px;
+  margin-bottom: 18px;
 }
 
 footer {
@@ -164,7 +175,7 @@ footer {
     font-size: 0.8em;
   }
 
-  table .meeting-list-when, table .meeting-list-quota {
+  table .meeting-list-when, table .meeting-list-quota, table .meeting-list-admin {
     display: none;
   }
 

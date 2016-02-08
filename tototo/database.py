@@ -46,6 +46,22 @@ class User(Base):
     def password(cls):
         return User.CryptComparator(cls.hashed_password)
 
+    class IsAdminComparator(Comparator):
+        def __eq__(self, other):
+            return (self.expression == 1) == other
+
+    @hybrid_property
+    def is_admin(self):
+        return self.id == 1
+
+    @is_admin.setter
+    def is_admin(self, value):
+        raise NotImplementedError('is_admin is a readonly property')
+
+    @is_admin.comparator
+    def is_admin(cls):
+        return User.IsAdminComparator(cls.id)
+
     registrations = relationship('Registration', lazy='dynamic')
 
 
