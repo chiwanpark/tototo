@@ -1,9 +1,9 @@
 click==3.3
 flask==0.10.1
 gunicorn==19.1.1
-sqlalchemy==0.9.8
+sqlalchemy==1.0.11
 psycopg2==2.5.4
 pytz==2014.10
-alembic==0.7.4
+alembic==0.8.4
 bcrypt==1.0.1
 sendgrid==1.4.0

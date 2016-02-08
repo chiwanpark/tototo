@@ -75,6 +75,7 @@ class Meeting(Base):
         return registration.status
 
     registrations = relationship('Registration', lazy='dynamic')
+    slides = relationship('Slide', lazy='dynamic')
 
 
 class Registration(Base):
@@ -90,3 +91,20 @@ class Registration(Base):
 
     meeting = relationship('Meeting')
     user = relationship('User')
+
+
+class Slide(Base):
+    __tablename__ = 'slides'
+    id = Column(Integer, primary_key=True)
+    presenter_id = Column(Integer, ForeignKey('users.id'))
+    meeting_id = Column(Integer, ForeignKey('meetings.id'))
+
+    title = Column(String(512), nullable=False)
+    memo = Column(String(512))
+    url = Column(String(1024))
+
+    registered = Column(DateTime(timezone=True), default=datetime_now)
+    updated = Column(DateTime(timezone=True), default=datetime_now, onupdate=datetime_now)
+
+    meeting = relationship('Meeting')
+    presenter = relationship('User')
