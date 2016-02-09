@@ -1,5 +1,8 @@
 {% extends "skeleton.html" %}
 {% block script %}
+  <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.2.0/jquery.min.js"></script>
+  <script type="text/javascript"
+          src="https://cdnjs.cloudflare.com/ajax/libs/embedly-jquery/3.1.1/jquery.embedly.min.js"></script>
   <script type="text/javascript" src="//apis.daum.net/maps/maps3.js?apikey={{ config.DAUM_MAP_API_KEY }}"></script>
   <script type="text/javascript">
     window.onload = function () {
@@ -33,6 +36,15 @@
       statusInput.value = status;
       return true;
     };
+
+    jQuery(function($) {
+      $('div.slide > a').embedly({
+        key: '27185d7bd8524eb59edc7cd830801ce9',
+        query: {
+          maxwidth: 400
+        }
+      });
+    });
   </script>
 {% endblock %}
 {% block content %}
@@ -133,5 +145,28 @@
         </form>
       {% endfor %}
     </div>
+  </section>
+
+  <section class="pure-u-1">
+    <h2>발표 슬라이드</h2>
+    {% if current_user.is_admin %}
+      <a href="{{ url_for('meetings.form_post_slide', meeting_id=meeting.id) }}"
+         class="pure-button pure-button-primary"><i class="fa fa-plus"></i> 슬라이드 추가</a>
+    {% endif %}
+    {% if meeting.slides.count() > 0 %}
+      {% for slide in meeting.slides %}
+        <div class="pure-u-1 slides">
+          <h3>{{ slide.title }}</h3>
+
+          <p>{{ slide.memo }}</p>
+
+          <div class="slide">
+            <a target="_blank" href="{{ slide.url }}">Link</a>
+          </div>
+        </div>
+      {% endfor %}
+    {% else %}
+      <p>업로드 된 발표 슬라이드가 없습니다.</p>
+    {% endif %}
   </section>
 {% endblock %}

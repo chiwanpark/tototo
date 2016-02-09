@@ -1,0 +1,45 @@
+{% extends "skeleton.html" %}
+{% block content %}
+  <section class="pure-u-1">
+    <h2>슬라이드 등록</h2>
+
+    <p>토토토 모임에서 발표한 슬라이드를 업로드 합니다.</p>
+
+    {% if message %}
+      <div class="error-message">
+        <h3><i class="fa fa-times"></i> Error</h3>
+
+        <p>{{ message }}</p>
+      </div>
+    {% endif %}
+
+    <form class="pure-form pure-form-aligned" method="post"
+          action="{{ url_for('meetings.post_slides', meeting_id=meeting_id) }}">
+      <fieldset>
+        <div class="pure-control-group">
+          <label for="presenter_id"><i class="fa fa-user"></i> 발표자 번호</label>
+          <input type="text" id="presenter_id" name="presenter_id" class="pure-input-1-2"/>
+        </div>
+
+        <div class="pure-control-group">
+          <label for="title"><i class="fa fa-file"></i> 슬라이드 제목</label>
+          <input type="text" id="title" name="title" class="pure-input-1-2"/>
+        </div>
+
+        <div class="pure-control-group">
+          <label for="memo"><i class="fa fa-comments-o"></i> 메모</label>
+          <textarea id="memo" name="memo" class="pure-input-1-2"></textarea>
+        </div>
+
+        <div class="pure-control-group">
+          <label for="url"><i class="fa fa-link"></i> URL</label>
+          <input type="text" id="url" name="url" class="pure-input-1-2"/>
+        </div>
+
+        <div class="pure-controls">
+          <button type="submit" class="pure-button pure-button-primary"><i class="fa fa-check-circle"></i> 업로드</button>
+        </div>
+      </fieldset>
+    </form>
+  </section>
+{% endblock %}

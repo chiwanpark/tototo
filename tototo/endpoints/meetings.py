@@ -5,8 +5,7 @@ from flask import Blueprint, render_template, request, redirect, url_for
 from sqlalchemy import desc
 from tototo import config
 from tototo.auth import signin_required, admin_required, get_current_user
-from tototo.database import Registration, db_session, Meeting
-
+from tototo.database import Registration, db_session, Meeting, Slide
 
 context = Blueprint('meetings', __name__, url_prefix='/meetings')
 
@@ -155,6 +154,32 @@ def manage_registration(meeting_id, registration_id):
 
     registration.status = status
     db_session.add(registration)
+    db_session.commit()
+
+    return redirect(url_for('meetings.get_meeting', meeting_id=meeting_id))
+
+
+@context.route('/<int:meeting_id>/slides')
+@admin_required
+def form_post_slide(meeting_id):
+    return render_template('form-slides.html', meeting_id=meeting_id, current_user=get_current_user())
+
+
+@context.route('/<int:meeting_id>/slides', methods=('POST',))
+@admin_required
+def post_slides(meeting_id):
+    presenter_id = int(request.form.get('presenter_id', '-1'))
+    title = request.form.get('title', None)
+    memo = request.form.get('memo', None)
+    url = request.form.get('url', None)
+
+    if not title or not url or presenter_id == -1:
+        return render_template(
+            'form-slides.html', current_user=get_current_user(), meeting_id=meeting_id,
+            message='발표자 번호, 제목, URL은 반드시 입력해야합니다.')
+
+    slide = Slide(presenter_id=presenter_id, meeting_id=meeting_id, title=title, memo=memo, url=url)
+    db_session.add(slide)
     db_session.commit()
 
     return redirect(url_for('meetings.get_meeting', meeting_id=meeting_id))

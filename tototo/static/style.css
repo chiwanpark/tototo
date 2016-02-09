@@ -150,7 +150,7 @@ img.user-image {
   max-width: 150px;
 }
 
-div.wishlist div > h3 {
+div.wishlist div > h3, div.slides > h3 {
   margin: 4px 0;
   padding: 0;
 }
@@ -158,6 +158,11 @@ div.wishlist div > h3 {
 div#location-map {
   height: 350px;
   margin-bottom: 18px;
+}
+
+div.slide {
+  margin: 5px auto;
+  text-align: center;
 }
 
 footer {
