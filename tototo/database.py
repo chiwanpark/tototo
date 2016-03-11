@@ -4,7 +4,7 @@ from datetime import datetime
 from sqlalchemy import create_engine, Column, Integer, String, Boolean, ForeignKey, DateTime, func, text, Float
 from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy.ext.hybrid import hybrid_property, Comparator
-from sqlalchemy.orm import scoped_session, sessionmaker, relationship
+from sqlalchemy.orm import scoped_session, sessionmaker, relationship, configure_mappers
 from tototo import config
 
 
@@ -18,6 +18,9 @@ Base.query = db_session.query_property()
 def datetime_now():
     return config.TIMEZONE.localize(datetime.now())
 
+def init_schema():
+    configure_mappers()
+    Base.metadata.create_all(bind=db_engine)
 
 class User(Base):
     __tablename__ = 'users'
