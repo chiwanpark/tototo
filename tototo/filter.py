@@ -12,7 +12,7 @@ _image_re = re.compile(r'\[image\|http(?P<src>.*?)\]')
 
 @app.template_filter()
 def localtime_format(value: datetime, fmt: str):
-    return value.astimezone(config.TIMEZONE).strftime(fmt)
+    return value.replace(tzinfo=config.TIMEZONE).strftime(fmt)
 
 
 @app.template_filter()
@@ -23,3 +23,8 @@ def html_filter(ctx, value):
     if ctx.autoescape:
         result = Markup(result)
     return result
+
+@app.template_filter()
+def dday(value: datetime):
+	return (datetime.now().replace(hour=0, minute=0, second=0, microsecond=0) \
+		- value.replace(hour=0, minute=0, second=0, microsecond=0)).days
