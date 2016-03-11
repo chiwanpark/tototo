@@ -18,9 +18,11 @@ Base.query = db_session.query_property()
 def datetime_now():
     return config.TIMEZONE.localize(datetime.now())
 
+
 def init_schema():
     configure_mappers()
     Base.metadata.create_all(bind=db_engine)
+
 
 class User(Base):
     __tablename__ = 'users'
