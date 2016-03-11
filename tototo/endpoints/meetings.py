@@ -43,20 +43,21 @@ def get_meeting_data_from_request():
     location_lat = float(request.form.get('location_lat', '0.0'))
     location_lng = float(request.form.get('location_lng', '0.0'))
     when = request.form.get('when', None)
+    when_end = request.form.get('when_end', None)
     available = request.form.get('available', 'off') == 'on'
     quota = int(request.form.get('quota', '-1'))
 
-    if not name or not where or not when or quota == -1 or location_lat < 0.1 or location_lng < 0.1:
+    if not name or not where or not when or not when_end or quota == -1 or location_lat < 0.1 or location_lng < 0.1:
         raise ValueError()
 
-    return name, where, location_lat, location_lng, when, available, quota
+    return name, where, location_lat, location_lng, when, when_end, available, quota
 
 
 @context.route('/<int:meeting_id>/modify', methods=('POST',))
 @admin_required
 def modify_meeting(meeting_id):
     try:
-        name, where, location_lat, location_lng, when, available, quota = get_meeting_data_from_request()
+        name, where, location_lat, location_lng, when, when_end, available, quota = get_meeting_data_from_request()
     except ValueError:
         return render_template('error.html', current_user=get_current_user(), message='잘못된 요청입니다.'), 400
 
@@ -65,12 +66,14 @@ def modify_meeting(meeting_id):
         return render_template('error.html', current_user=get_current_user(), message='해당 모임 정보가 없습니다.')
 
     when = config.TIMEZONE.localize(datetime.strptime(when, '%Y-%m-%d %H:%M'))
+    when_end = config.TIMEZONE.localize(datetime.strptime(when_end, '%Y-%m-%d %H:%M'))
 
     meeting.name = name
     meeting.where = where
     meeting.location_lat = location_lat
     meeting.location_lng = location_lng
     meeting.when = when
+    meeting.when_end = when_end
     meeting.available = available
     meeting.quota = quota
     db_session.add(meeting)
@@ -83,15 +86,16 @@ def modify_meeting(meeting_id):
 @admin_required
 def post_meeting():
     try:
-        name, where, location_lat, location_lng, when, available, quota = get_meeting_data_from_request()
+        name, where, location_lat, location_lng, when, when_end, available, quota = get_meeting_data_from_request()
     except ValueError:
         return render_template('error.html', current_user=get_current_user(), message='잘못된 요청입니다.'), 400
 
     when = config.TIMEZONE.localize(datetime.strptime(when, '%Y-%m-%d %H:%M'))
+    when_end = config.TIMEZONE.localize(datetime.strptime(when_end, '%Y-%m-%d %H:%M'))
 
     meeting = Meeting(
-        name=name, where=where, when=when, available=available, quota=quota, location_lat=location_lat,
-        location_lng=location_lng)
+        name=name, where=where, when=when, when_end=when_end, available=available, quota=quota,
+        location_lat=location_lat, location_lng=location_lng)
     db_session.add(meeting)
     db_session.commit()
 

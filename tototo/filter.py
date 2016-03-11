@@ -13,7 +13,7 @@ _image_re = re.compile(r'\[image\|http(?P<src>.*?)\]')
 
 @app.template_filter()
 def localtime_format(value: datetime, fmt: str):
-    return value.replace(tzinfo=config.TIMEZONE).strftime(fmt)
+    return value.astimezone(tz=config.TIMEZONE).strftime(fmt)
 
 
 @app.template_filter()

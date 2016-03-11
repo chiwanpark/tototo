@@ -18,9 +18,15 @@
         </div>
 
         <div class="pure-control-group">
-          <label for="when"><i class="fa fa-calendar"></i> When</label>
+          <label for="when"><i class="fa fa-calendar"></i> When (Start)</label>
           <input type="text" id="when" name="when" class="pure-input-1-2"
-                 value="{% if meeting %}{{ meeting.when.strftime('%Y-%m-%d %H:%M') }}{% endif %}"/>
+                 value="{% if meeting %}{{ meeting.when | localtime_format('%Y-%m-%d %H:%M') }}{% endif %}"/>
+        </div>
+
+        <div class="pure-control-group">
+          <label for="when_end"><i class="fa fa-calendar"></i> When (Finish)</label>
+          <input type="text" id="when_end" name="when_end" class="pure-input-1-2"
+                 value="{% if meeting %}{{ meeting.when_end | localtime_format('%Y-%m-%d %H:%M') }}{% endif %}"/>
         </div>
 
         <div class="pure-control-group">
