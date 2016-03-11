@@ -4,6 +4,7 @@ import re
 
 from jinja2 import evalcontextfilter, escape, Markup
 from tototo import config, app
+from .database import datetime_now
 
 
 _paragraph_re = re.compile(r'(?:\r\n|\r|\n){2,}')
@@ -26,5 +27,5 @@ def html_filter(ctx, value):
 
 @app.template_filter()
 def dday(value: datetime):
-	return (datetime.now().replace(hour=0, minute=0, second=0, microsecond=0) \
-		- value.replace(hour=0, minute=0, second=0, microsecond=0)).days
+	return (datetime_now().replace(hour=0, minute=0, second=0, microsecond=0, tzinfo=config.TIMEZONE) \
+		- value.replace(hour=0, minute=0, second=0, microsecond=0, tzinfo=config.TIMEZONE)).days
