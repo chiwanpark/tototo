@@ -18,8 +18,8 @@
         position: new daum.maps.LatLng({{ meeting.location_lat }}, {{ meeting.location_lng }})
       });
       var iwContent = '<div style="padding: 5px;">{{ meeting.where }} (' +
-          '<a target="_blank" href="http://map.daum.net/link/map/{{ meeting.where }},{{ meeting.location_lat }},' +
-          '{{ meeting.location_lng }}">다음 지도</a>)&nbsp;</div>';
+          '<a target="_blank" href="https://map.kakao.com/link/map/{{ meeting.where }},{{ meeting.location_lat }},' +
+          '{{ meeting.location_lng }}">카카오맵</a>)&nbsp;</div>';
       var infoWindow = new daum.maps.InfoWindow({
         position: new daum.maps.LatLng({{ meeting.location_lat }}, {{ meeting.location_lng }}),
         content: iwContent
